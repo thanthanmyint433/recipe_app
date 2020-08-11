@@ -1,8 +1,18 @@
 package com.example.spring5.domain;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.rmi.server.UnicastRemoteObject;
-
+import javax.persistence.*;
+import java.util.Set;
+@Data
+@EqualsAndHashCode(exclude={"recipes"})
+@Entity
 public class Category {
-    private String departmentName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String description;
 
+    @ManyToMany(mappedBy = "categories")
+    private Set<Recipe> recipes;
 }

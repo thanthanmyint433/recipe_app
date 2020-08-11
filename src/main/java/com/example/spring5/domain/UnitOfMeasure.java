@@ -1,15 +1,19 @@
 package com.example.spring5.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 public class UnitOfMeasure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    private String uom;
-    @OneToOne
+    private String description;
+
+   /* @OneToOne
     private Ingredient ingredient;
 
     public Long getId() {
@@ -34,5 +38,5 @@ public class UnitOfMeasure {
 
     public void setIngredient(Ingredient ingredient) {
         this.ingredient = ingredient;
-    }
+    }*/
 }
