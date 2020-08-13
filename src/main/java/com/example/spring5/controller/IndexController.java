@@ -1,32 +1,27 @@
 package com.example.spring5.controller;
-import com.example.spring5.domain.Category;
-import com.example.spring5.domain.UnitOfMeasure;
 
 import com.example.spring5.repositories.CategoryRepository;
 import com.example.spring5.repositories.UnitOfMeasureRepository;
+import com.example.spring5.service.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
 @Slf4j
 @Controller
 public class IndexController {
-    private CategoryRepository cateRepository;
-    private UnitOfMeasureRepository unitofMeasureRepository;
+    private final RecipeService recipeService;
 
-    public IndexController(CategoryRepository cateRepository, UnitOfMeasureRepository unitofMeasureRepository) {
-        this.cateRepository = cateRepository;
-        this.unitofMeasureRepository = unitofMeasureRepository;
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
 
     @RequestMapping({"","/","/index"})
-    public String getIndexPage(){
-        log.debug("Getting index page");
-        Optional<Category> category= cateRepository.findByDescription("american1");
-        Optional<UnitOfMeasure> unitOfMeasure=unitofMeasureRepository.findByDescription("m4");
-        //System.out.println("database>>>>>>"+category.get().getId());
-       // System.out.println("database>>>>>>"+unitOfMeasure.get().getId());
+    public String getIndexPage(Model model){
+        log.info("Getting index page");
+        model.addAttribute("recipes", recipeService.getRecipes());
+log.info("model"+recipeService.getRecipes());
         return "index";
     }
 }
